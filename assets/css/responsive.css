@@ -1,0 +1,316 @@
+/* ============================================================
+   GAMIFIED LIFE 1.0 — Responsive
+   Mobile  : ≤ 480px
+   Phablet : 481–767px
+   Tablet  : 768–1023px
+   Desktop : 1024px+
+   ============================================================ */
+
+/* ── Desktop (1024px+) fine-tuning ── */
+@media (min-width: 1024px) {
+  .grid-4          { grid-template-columns: repeat(4, 1fr); }
+  .grid-3          { grid-template-columns: repeat(3, 1fr); }
+  .grid-2          { grid-template-columns: repeat(2, 1fr); }
+  .achieve-grid    { grid-template-columns: repeat(3, 1fr); }
+  .shop-grid-inner { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Hide/show helpers ── */
+@media (min-width: 768px) {
+  .hamburger  { display: none !important; }
+  .mobile-nav { display: none !important; }
+}
+@media (max-width: 767px) {
+  nav { display: none !important; }
+  .hamburger { display: flex; }
+}
+
+/* ════════════════════════════════════════════
+   TABLET  768–1023px
+   ════════════════════════════════════════════ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  main { padding: 20px 18px 36px; }
+  .header-inner    { padding: 0 18px; gap: 12px; }
+  .logo-v          { display: none; }
+  .pill-level      { display: none; }
+  .grid-4          { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .grid-3          { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .grid-2          { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .shop-grid-inner { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .achieve-grid    { grid-template-columns: repeat(3, 1fr); }
+  .hero-banner     { padding: 26px 28px; }
+  .hero-content h1 { font-size: 1.7rem; }
+  .hero-xp-bar     { width: 220px; }
+  .hero-avatar     { width: 74px; height: 74px; font-size: 2rem; }
+  .profile-hero    { padding: 22px 24px; gap: 18px; }
+  #runner-canvas   { height: 185px; }
+}
+
+/* ════════════════════════════════════════════
+   PHABLET  481–767px
+   ════════════════════════════════════════════ */
+@media (min-width: 481px) and (max-width: 767px) {
+  main             { padding: 16px 16px 32px; }
+  .header-inner    { padding: 0 14px; gap: 8px; }
+  .logo-v          { display: none; }
+  .pill-name,
+  .pill-level      { display: none; }
+  .player-pill     { padding: 5px; }
+  .grid-4          { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .grid-3          { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .grid-2          { grid-template-columns: 1fr; gap: 14px; }
+  .shop-grid-inner { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .achieve-grid    { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .hero-banner     { flex-direction: column; gap: 16px; padding: 22px; }
+  .hero-xp-bar     { width: 100%; }
+  .hero-avatar-wrap{ display: flex; align-items: center; gap: 14px; }
+  .hero-avatar     { width: 60px; height: 60px; font-size: 1.7rem; margin: 0; animation: none; }
+  .habit-day:nth-child(n+6) { display: none; }
+  .tabs            { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .tabs::-webkit-scrollbar { height: 2px; }
+  .tab-btn         { white-space: nowrap; }
+  .profile-hero    { flex-direction: column; gap: 14px; padding: 20px; }
+  #runner-canvas   { height: 170px; }
+  .section-title   { font-size: 1.3rem; }
+}
+
+/* ════════════════════════════════════════════
+   MOBILE  ≤ 480px
+   ════════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  /* Base */
+  main { padding: 12px 12px 28px; }
+
+  /* Header */
+  .header-inner    { padding: 0 12px; gap: 6px; }
+  .logo-v          { display: none; }
+  .logo-text       { display: none; }
+  .lang-switch     { padding: 2px; gap: 1px; }
+  .lang-switch button { padding: 5px 7px; font-size: .68rem; }
+  .pill-name,
+  .pill-level      { display: none; }
+  .player-pill     { padding: 4px; border-radius: 10px; }
+  .pill-avatar     { width: 28px; height: 28px; font-size: .88rem; }
+  .btn-icon        { width: 34px; height: 34px; border-radius: 9px; font-size: .9rem; }
+
+  /* Grids */
+  .grid-4          { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .grid-3          { grid-template-columns: 1fr; gap: 10px; }
+  .grid-2          { grid-template-columns: 1fr; gap: 12px; }
+  .shop-grid-inner { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .achieve-grid    { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+  /* Hero */
+  .hero-banner     { flex-direction: column; gap: 14px; padding: 16px; border-radius: 16px; margin-bottom: 16px; }
+  .hero-content h1 { font-size: 1.25rem; line-height: 1.2; }
+  .hero-content p  { font-size: .8rem; margin-top: 4px; }
+  .hero-xp         { margin-top: 12px; }
+  .hero-xp-bar     { width: 100%; height: 8px; }
+  .hero-xp-text    { font-size: .7rem; }
+  .hero-avatar-wrap{ display: flex; align-items: center; gap: 12px; }
+  .hero-avatar     { width: 52px; height: 52px; font-size: 1.4rem; border-radius: 14px; margin: 0; animation: none; }
+  .hero-level-chip { font-size: .68rem; padding: 3px 10px; }
+
+  /* Stat cards */
+  .stat-card  { padding: 13px 12px; border-radius: 14px; }
+  .stat-icon  { font-size: 1.4rem; margin-bottom: 5px; }
+  .stat-label { font-size: .65rem; }
+  .stat-val   { font-size: 1.2rem; margin: 2px 0 6px; }
+  .stat-val small { font-size: .55em; }
+
+  /* Cards */
+  .card        { border-radius: 16px; }
+  .card-header { padding: 13px 14px 0; }
+  .card-body   { padding: 10px 14px 16px; }
+  .card-title  { font-size: .9rem; }
+
+  /* Quest */
+  .quest-item   { gap: 9px; padding: 10px 0; }
+  .quest-check  { width: 20px; height: 20px; border-radius: 6px; font-size: .62rem; }
+  .quest-name   { font-size: .82rem; }
+  .quest-meta   { font-size: .68rem; }
+  .quest-xp-tag { font-size: .68rem; padding: 2px 7px; }
+  .diff-chip    { font-size: .6rem; padding: 1px 5px; }
+  .quick-add    { gap: 7px; margin-top: 8px; }
+  .quick-input  { font-size: .82rem; padding: 8px 11px; }
+
+  /* Habits */
+  .habit-row    { gap: 8px; padding: 9px 0; }
+  .habit-name   { font-size: .82rem; }
+  .habit-streak { font-size: .68rem; }
+  .habit-day    { width: 24px; height: 24px; font-size: .58rem; border-radius: 6px; }
+  .habit-day:nth-child(n+6) { display: none; }
+
+  /* Achievements */
+  .achieve-card { padding: 12px 6px; border-radius: 11px; }
+  .achieve-icon { font-size: 1.45rem; margin-bottom: 4px; }
+  .achieve-name { font-size: .64rem; }
+
+  /* Leaderboard */
+  .leader-row  { padding: 9px 10px; gap: 10px; border-radius: 10px; margin-bottom: 6px; }
+  .rank-badge  { width: 26px; height: 26px; font-size: .75rem; }
+  .leader-name { font-size: .82rem; }
+  .leader-lv   { font-size: .68rem; }
+  .leader-xp   { font-size: .78rem; }
+
+  /* Diary */
+  .diary-entry { padding: 11px 12px; border-radius: 10px; }
+  .diary-text  { font-size: .8rem; }
+
+  /* Finance */
+  .finance-row    { gap: 9px; padding: 8px 0; }
+  .finance-label  { font-size: .8rem; }
+  .finance-amount { font-size: .82rem; }
+
+  /* Pomodoro */
+  .pomo-time       { font-size: 2.2rem; }
+  .pomo-mode-label { font-size: .72rem; }
+  .pomo-controls,
+  .pomo-mode-btns  { gap: 5px; }
+  .pomo-controls .btn,
+  .pomo-mode-btns .btn { padding: 6px 10px; font-size: .76rem; }
+
+  /* Section title */
+  .section-title      { font-size: 1.15rem; margin-bottom: 14px; }
+  .section-title .ico { font-size: 1.3rem; }
+
+  /* Tabs */
+  .tabs    { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; gap: 5px; -webkit-overflow-scrolling: touch; }
+  .tabs::-webkit-scrollbar { height: 2px; }
+  .tab-btn { font-size: .75rem; padding: 6px 10px; white-space: nowrap; border-radius: 8px; }
+
+  /* Skills */
+  .skill-item { padding: 10px 11px; border-radius: 10px; gap: 10px; margin-bottom: 7px; }
+  .skill-ico  { font-size: 1.2rem; width: 28px; }
+  .skill-name { font-size: .82rem; }
+  .skill-lv   { font-size: .66rem; }
+
+  /* Shop */
+  .shop-item  { padding: 14px 8px; border-radius: 12px; }
+  .shop-emoji { font-size: 1.65rem; margin-bottom: 6px; }
+  .shop-name  { font-size: .76rem; }
+  .shop-price { font-size: .72rem; }
+  .shop-owned { font-size: .66rem; }
+
+  /* Profile */
+  .profile-hero   { flex-direction: column; padding: 16px; gap: 12px; border-radius: 18px; margin-bottom: 16px; }
+  .profile-big-av { width: 60px; height: 60px; font-size: 1.65rem; border-radius: 13px; }
+  .profile-name   { font-size: 1.2rem; }
+  .profile-title  { font-size: .82rem; }
+  .profile-mini-stats { gap: 14px; flex-wrap: wrap; margin-top: 10px; }
+  .pms-val   { font-size: .95rem; }
+  .pms-label { font-size: .64rem; }
+  .profile-hero .btn { margin-left: 0; margin-top: 4px; align-self: flex-start; padding: 7px 14px; font-size: .8rem; }
+
+  /* Runner */
+  .runner-card            { border-radius: 16px; }
+  .runner-header          { padding: 12px 14px; flex-wrap: wrap; gap: 6px; }
+  .runner-header .card-title { font-size: .88rem; }
+  .runner-header > div    { font-size: .76rem; }
+  #runner-canvas          { height: 150px; }
+  .runner-overlay h2      { font-size: 1.2rem; }
+  .runner-overlay p       { font-size: .8rem; margin-bottom: 12px; }
+  .start-game-btn         { padding: 9px 22px; font-size: .88rem; }
+
+  /* Memory */
+  .mem-grid { gap: 5px; }
+  .mem-card { font-size: 1.1rem; border-radius: 8px; }
+
+  /* Clicker */
+  .clicker-btn   { width: 76px; height: 76px; font-size: 1.8rem; }
+  .clicker-count { font-size: 1.65rem; }
+  .clicker-sub   { font-size: .72rem; }
+
+  /* Quiz */
+  .quiz-q   { font-size: .84rem; }
+  .quiz-opt { font-size: .8rem; padding: 8px 11px; border-radius: 9px; }
+
+  /* Word game */
+  .scramble-word { font-size: 1.4rem; letter-spacing: 5px; }
+
+  /* Updates */
+  .update-card   { padding: 14px; border-radius: 14px; margin-bottom: 12px; }
+  .update-ver    { font-size: .95rem; }
+  .update-title  { font-size: .88rem; }
+  .update-desc   { font-size: .8rem; line-height: 1.55; }
+  .update-tags   { gap: 5px; margin-top: 10px; }
+  .update-tag    { font-size: .64rem; padding: 3px 8px; }
+  .update-status { font-size: .66rem; padding: 3px 10px; }
+
+  /* Modal */
+  .modal        { padding: 18px; border-radius: 16px; width: 94%; }
+  .modal-title  { font-size: 1rem; }
+  .form-control { font-size: .84rem; padding: 9px 12px; border-radius: 9px; }
+  .form-label   { font-size: .72rem; }
+
+  /* Toast — full width on mobile */
+  #toast-container { bottom: 12px; right: 12px; left: 12px; align-items: flex-end; }
+  .toast { max-width: 100%; width: 100%; font-size: .79rem; padding: 9px 13px; border-radius: 10px; }
+
+  /* Footer */
+  footer { padding: 14px 12px; }
+  .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 5px; font-size: .75rem; }
+  .footer-logo  { font-size: .9rem; }
+
+  /* Misc */
+  .badge  { font-size: .66rem; padding: 2px 9px; }
+  .btn-sm { padding: 6px 11px; font-size: .76rem; }
+  .activity-grid { gap: 3px; }
+  .act-cell      { border-radius: 3px; }
+}
+
+/* ── Extra small (≤360px) ── */
+@media (max-width: 360px) {
+  main { padding: 10px 10px 24px; }
+  .header-inner    { padding: 0 10px; gap: 4px; }
+  .logo            { gap: 7px; font-size: 1.05rem; }
+  .logo-icon       { width: 30px; height: 30px; font-size: .88rem; border-radius: 8px; }
+  .grid-4          { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .hero-content h1 { font-size: 1.08rem; }
+  .stat-val        { font-size: 1.05rem; }
+  .achieve-grid    { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .shop-grid-inner { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .pomo-time       { font-size: 1.9rem; }
+  #runner-canvas   { height: 130px; }
+  .mem-card        { font-size: .95rem; }
+}
+
+/* ── Touch devices — remove stuck hover states ── */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover,
+  .stat-card:hover,
+  .shop-item:hover,
+  .achieve-card:hover,
+  .update-card:hover  { transform: none; box-shadow: none; }
+  .quest-item:hover   { transform: none; }
+  .skill-item:hover   { transform: none; }
+  .leader-row:hover   { transform: none; }
+  .nav-link:hover     { transform: none; }
+  .logo:hover         { transform: none; }
+  .player-pill:hover  { transform: none; box-shadow: none; }
+  .btn-icon:hover     { transform: none; }
+  .habit-day:hover    { transform: none; }
+  /* Increase tap targets */
+  .nav-link    { min-height: 44px; display: flex; align-items: center; }
+  .tab-btn     { min-height: 38px; }
+  .btn         { min-height: 40px; }
+  .quest-item  { min-height: 44px; }
+  .habit-day   { min-width: 30px; min-height: 30px; }
+  .mem-card    { min-height: 40px; }
+}
+
+/* ── Reduce motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ── iPhone safe area ── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  footer { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+  #toast-container { bottom: calc(12px + env(safe-area-inset-bottom)); }
+}

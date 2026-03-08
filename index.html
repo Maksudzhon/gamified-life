@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light" data-lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Gamified Life — hayotingizni RPG o'yinga aylantiring">
+  <meta name="theme-color" content="#5b52f5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Gamified Life 1.0</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+<div id="particles"></div>
+<div id="toast-container"></div>
+
+<!-- ══════════ MODAL: Add Quest ══════════ -->
+<div class="modal-overlay" id="modal-add-quest">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">⚔️ <span data-i18n="add_quest">Yangi Vazifa</span></div>
+      <button class="modal-close" onclick="closeModal('modal-add-quest')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="quest_name_lbl">Vazifa nomi</label>
+      <input class="form-control" id="q-name" type="text" placeholder="Masalan: Kitob o'qi..." data-i18n-ph="quest_ph">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="diff_lbl">Qiyinlik</label>
+      <select class="form-control" id="q-diff">
+        <option value="easy"   data-i18n="diff_easy">Oson</option>
+        <option value="medium" data-i18n="diff_med">O'rta</option>
+        <option value="hard"   data-i18n="diff_hard">Qiyin</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="cat_lbl">Kategoriya</label>
+      <select class="form-control" id="q-cat">
+        <option value="health">💪 Salomatlik</option>
+        <option value="study">📚 O'qish</option>
+        <option value="work">💼 Ish</option>
+        <option value="social">👥 Ijtimoiy</option>
+        <option value="hobby">🎨 Hobbs</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="xp_lbl">XP Mukofot</label>
+      <input class="form-control" id="q-xp" type="number" value="50" min="10" max="500">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="submitQuest()" data-i18n="add_quest_btn">+ Vazifa Qo'sh</button>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: Edit Profile ══════════ -->
+<div class="modal-overlay" id="modal-edit-profile">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">👤 <span data-i18n="edit_profile">Profil Tahrirlash</span></div>
+      <button class="modal-close" onclick="closeModal('modal-edit-profile')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="name_lbl">Ism</label>
+      <input class="form-control" id="pe-name" type="text">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="avatar_lbl">Avatar Emoji</label>
+      <input class="form-control" id="pe-avatar" type="text" maxlength="2" placeholder="🧙">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="title_lbl">Unvon</label>
+      <select class="form-control" id="pe-title">
+        <option>Yangi Boshlovchi</option>
+        <option>Qahramon</option>
+        <option>Ustoz</option>
+        <option>Afsonaviy</option>
+        <option>Chempion</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="saveProfile()" data-i18n="save">Saqlash</button>
+  </div>
+</div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <div class="header-inner">
+
+    <a class="logo" onclick="showPage('home')" style="cursor:pointer">
+      <div class="logo-icon">🎮</div>
+      <span class="logo-text" style="font-family:'Baloo 2',cursive;font-weight:800;color:var(--accent)">Gamified Life</span>
+      <span class="logo-v">1.0</span>
+    </a>
+
+    <nav>
+      <a class="nav-link active" data-page="home"    onclick="showPage('home')"    data-i18n="nav_home">🏠 Bosh Sahifa</a>
+      <a class="nav-link"       data-page="quests"   onclick="showPage('quests')"  data-i18n="nav_quests">⚔️ Vazifalar</a>
+      <a class="nav-link"       data-page="skills"   onclick="showPage('skills')"  data-i18n="nav_skills">🌟 Ko'nikmalar</a>
+      <a class="nav-link"       data-page="games"    onclick="showPage('games')"   data-i18n="nav_games">🕹️ O'yinlar</a>
+      <a class="nav-link"       data-page="shop"     onclick="showPage('shop')"    data-i18n="nav_shop">🛒 Do'kon</a>
+      <a class="nav-link"       data-page="profile"  onclick="showPage('profile')" data-i18n="nav_profile">👤 Profil</a>
+      <a class="nav-link"       data-page="updates"  onclick="showPage('updates')" data-i18n="nav_updates">🔔 Yangilanishlar</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-switch">
+        <button id="lang-uz" class="active" onclick="setLang('uz')">UZ</button>
+        <button id="lang-ru"               onclick="setLang('ru')">RU</button>
+        <button id="lang-en"               onclick="setLang('en')">EN</button>
+      </div>
+      <button class="btn-icon" id="theme-btn" onclick="toggleTheme()">🌙</button>
+      <div class="player-pill" onclick="showPage('profile')" style="cursor:pointer">
+        <div class="pill-avatar" id="pill-avatar">🧙</div>
+        <div>
+          <div class="pill-name"  id="pill-name">Foydalanuvchi</div>
+          <div class="pill-level" id="pill-level">⭐ Daraja 1</div>
+        </div>
+      </div>
+      <div class="hamburger" id="hamburger-btn" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <a class="nav-link" data-page="home"    onclick="showPage('home')"    data-i18n="nav_home">🏠 Bosh Sahifa</a>
+  <a class="nav-link" data-page="quests"  onclick="showPage('quests')"  data-i18n="nav_quests">⚔️ Vazifalar</a>
+  <a class="nav-link" data-page="skills"  onclick="showPage('skills')"  data-i18n="nav_skills">🌟 Ko'nikmalar</a>
+  <a class="nav-link" data-page="games"   onclick="showPage('games')"   data-i18n="nav_games">🕹️ O'yinlar</a>
+  <a class="nav-link" data-page="shop"    onclick="showPage('shop')"    data-i18n="nav_shop">🛒 Do'kon</a>
+  <a class="nav-link" data-page="profile" onclick="showPage('profile')" data-i18n="nav_profile">👤 Profil</a>
+  <a class="nav-link" data-page="updates" onclick="showPage('updates')" data-i18n="nav_updates">🔔 Yangilanishlar</a>
+</div>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+
+  <!-- ════ HOME ════ -->
+  <div class="page active" id="page-home">
+
+    <!-- Hero -->
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h1 id="hero-banner-title">Salom, Foydalanuvchi! 👋</h1>
+        <p data-i18n="hero_sub">Hayotingizni o'yinga aylantiring!</p>
+        <div class="hero-xp">
+          <div class="hero-xp-label" id="hero-xp-to-next" data-i18n="xp_to_next">Keyingi darajaga:</div>
+          <div class="hero-xp-bar">
+            <div class="hero-xp-fill" id="hero-xp-fill" style="width:0%"></div>
+          </div>
+          <div class="hero-xp-text" id="hero-xp-text">0 / 200 XP</div>
+        </div>
+      </div>
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar" id="hero-avatar">🧙</div>
+        <div class="hero-level-chip" id="hero-level-chip">⭐ Daraja 1</div>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="grid-4" style="margin-bottom:20px">
+      <div class="stat-card s-hp">
+        <div class="stat-icon">❤️</div>
+        <div class="stat-label" data-i18n="stat_hp">Sog'liq</div>
+        <div class="stat-val" id="stat-hp-val">0<small>/100</small></div>
+        <div class="prog-wrap"><div class="prog-fill prog-hp" id="stat-hp-bar" style="width:0%"></div></div>
+      </div>
+      <div class="stat-card s-mp">
+        <div class="stat-icon">💎</div>
+        <div class="stat-label" data-i18n="stat_mp">Energiya</div>
+        <div class="stat-val" id="stat-mp-val">0<small>/100</small></div>
+        <div class="prog-wrap"><div class="prog-fill prog-mp" id="stat-mp-bar" style="width:0%"></div></div>
+      </div>
+      <div class="stat-card s-xp">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-label">XP</div>
+        <div class="stat-val" id="stat-xp-val">0</div>
+        <div class="prog-wrap"><div class="prog-fill prog-xp" id="stat-xp-bar" style="width:0%"></div></div>
+      </div>
+      <div class="stat-card s-gold">
+        <div class="stat-icon">🪙</div>
+        <div class="stat-label" data-i18n="stat_gold">Oltin</div>
+        <div class="stat-val" id="stat-gold-val">0</div>
+        <div class="prog-wrap"><div class="prog-fill prog-gold" id="stat-gold-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- Quests + Habits -->
+    <div class="grid-2" style="margin-bottom:18px">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⚔️ <span data-i18n="today_quests">Bugungi Vazifalar</span></div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-add-quest')">+ <span data-i18n="add">Qo'sh</span></button>
+        </div>
+        <div class="card-body">
+          <div id="quest-list"></div>
+          <div class="quick-add">
+            <input class="quick-input" id="quick-quest-input" placeholder="Tez qo'shish..." data-i18n-ph="quick_ph">
+            <button class="btn btn-primary btn-sm" onclick="quickAddQuest()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🔥 <span data-i18n="habits">Odatlar</span></div>
+          <span class="badge primary" id="streak-badge">0 🔥</span>
+        </div>
+        <div class="card-body" id="habit-list"></div>
+      </div>
+    </div>
+
+    <!-- Achievements + Pomodoro -->
+    <div class="grid-2" style="margin-bottom:18px">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🏆 <span data-i18n="achievements">Yutuqlar</span></div>
+          <span class="badge" id="achieve-count">0/12</span>
+        </div>
+        <div class="card-body">
+          <div class="achieve-grid" id="achieve-grid"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⏱️ <span data-i18n="pomodoro">Pomodoro</span></div>
+          <span class="badge primary" id="pomo-cycle">Tsikl 1</span>
+        </div>
+        <div class="card-body">
+          <div class="pomo-wrap">
+            <div class="pomo-mode-label" id="pomo-mode-label" data-i18n="focus_label">Fokus vaqti</div>
+            <div class="pomo-time" id="pomo-time">25:00</div>
+            <div class="pomo-controls">
+              <button class="btn btn-primary btn-sm" onclick="pomoAction('start')" data-i18n="pomo_start">Boshlash</button>
+              <button class="btn btn-ghost btn-sm"   onclick="pomoAction('pause')" data-i18n="pomo_pause">To'xtatish</button>
+              <button class="btn btn-ghost btn-sm"   onclick="pomoAction('reset')" data-i18n="pomo_reset">Qayta</button>
+            </div>
+            <div class="pomo-mode-btns">
+              <button class="btn btn-primary btn-sm" id="pomo-btn-focus" onclick="setPomoMode(25,'focus',this)"  data-i18n="focus_mode">Fokus</button>
+              <button class="btn btn-ghost btn-sm"   id="pomo-btn-short" onclick="setPomoMode(5,'short',this)"   data-i18n="short_break">Qisqa</button>
+              <button class="btn btn-ghost btn-sm"   id="pomo-btn-long"  onclick="setPomoMode(15,'long',this)"   data-i18n="long_break">Uzoq</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard + Diary -->
+    <div class="grid-2" style="margin-bottom:18px">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🏅 <span data-i18n="leaderboard">Liderlar Jadvali</span></div>
+        </div>
+        <div class="card-body" id="leaderboard-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📔 <span data-i18n="diary">Kundalik</span></div>
+          <button class="btn btn-primary btn-sm" onclick="openDiaryAdd()" data-i18n="write">Yoz</button>
+        </div>
+        <div class="card-body" id="diary-list"></div>
+      </div>
+    </div>
+
+    <!-- Finance + Weekly -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">💰 <span data-i18n="finance">Moliyaviy Tracker</span></div>
+          <button class="btn btn-ghost btn-sm" onclick="openFinanceAdd()">+</button>
+        </div>
+        <div class="card-body" id="finance-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📊 <span data-i18n="weekly_stats">Haftalik Statistika</span></div>
+        </div>
+        <div class="card-body" id="weekly-chart"></div>
+      </div>
+    </div>
+
+  </div><!-- /page-home -->
+
+  <!-- ════ QUESTS ════ -->
+  <div class="page" id="page-quests">
+    <div class="section-title"><span class="ico">⚔️</span> <span data-i18n="quests_title">Barcha Vazifalar</span></div>
+    <div class="tabs" style="margin-bottom:16px">
+      <button class="tab-btn active" onclick="switchQuestTab('all',this)"    data-i18n="tab_all">Barchasi</button>
+      <button class="tab-btn"        onclick="switchQuestTab('active',this)" data-i18n="tab_active">Faol</button>
+      <button class="tab-btn"        onclick="switchQuestTab('done',this)"   data-i18n="tab_done">Bajarilgan</button>
+      <button class="tab-btn"        onclick="openModal('modal-add-quest')">+ <span data-i18n="add_quest">Yangi</span></button>
+    </div>
+    <div class="grid-2" id="quests-page-list"></div>
+  </div>
+
+  <!-- ════ SKILLS ════ -->
+  <div class="page" id="page-skills">
+    <div class="section-title"><span class="ico">🌟</span> <span data-i18n="skills_title">Ko'nikmalar Daraxti</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">💪 <span data-i18n="physical">Jismoniy</span></div></div>
+        <div class="card-body"><div id="skill-physical"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🧠 <span data-i18n="mental">Aqliy</span></div></div>
+        <div class="card-body"><div id="skill-mental"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">💼 <span data-i18n="career">Kasbiy</span></div></div>
+        <div class="card-body"><div id="skill-career"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🎨 <span data-i18n="creative">Ijodiy</span></div></div>
+        <div class="card-body"><div id="skill-creative"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ GAMES ════ -->
+  <div class="page" id="page-games">
+    <div class="section-title"><span class="ico">🕹️</span> <span data-i18n="games_title">O'yinlar</span></div>
+
+    <!-- Runner -->
+    <div class="runner-card" style="margin-bottom:20px">
+      <div class="runner-header">
+        <div class="card-title">🏃 <span data-i18n="runner_title">Yuguruvchi Qahramon</span></div>
+        <div>
+          <span data-i18n="runner_score">Hisob</span>: <strong id="runner-score-val">0</strong>
+          &nbsp;|&nbsp;
+          <span data-i18n="runner_record">Rekord</span>: <strong id="runner-record-val">0</strong>
+        </div>
+      </div>
+      <div class="runner-canvas-wrap">
+        <canvas id="runner-canvas"></canvas>
+        <div class="runner-overlay" id="runner-overlay">
+          <h2 data-i18n="runner_title">🏃 Yuguruvchi Qahramon</h2>
+          <p data-i18n="runner_sub">Spacebar yoki bosib sakrash</p>
+          <button class="start-game-btn glow-pulse" onclick="Runner.start()" data-i18n="start_game">O'yinni Boshlash</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:18px">
+      <!-- Memory -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🧠 <span data-i18n="memory_title">Xotira O'yini</span></div>
+          <div style="font-size:.78rem;color:var(--text3)">
+            <span data-i18n="moves">Harakatlar</span>: <strong id="mem-moves">0</strong>
+            &nbsp;|&nbsp;
+            <span data-i18n="pairs">Juftlar</span>: <strong id="mem-pairs">0/8</strong>
+          </div>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary btn-full" onclick="Memory.init()" style="margin-bottom:10px" data-i18n="new_game">Yangi O'yin</button>
+          <div class="mem-grid" id="memory-grid"></div>
+        </div>
+      </div>
+
+      <!-- Clicker -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">👆 <span data-i18n="clicker_title">Kuchli Bosuvchi</span></div>
+          <span class="badge primary" id="clicker-level">Daraja 1</span>
+        </div>
+        <div class="card-body">
+          <div class="clicker-center">
+            <button class="clicker-btn" id="clicker-btn" onclick="Clicker.click(event)">⚡</button>
+            <div class="clicker-count" id="clicker-count">0</div>
+            <div class="clicker-sub" data-i18n="total_clicks">Jami bosilmalar</div>
+            <div style="font-size:.8rem;color:var(--text3);margin-top:6px">
+              <span data-i18n="per_click">Har bosish</span>: <strong id="clicker-per">+1</strong> XP
+            </div>
+            <button class="btn btn-primary btn-full" id="upgrade-btn" onclick="Clicker.upgrade()" style="margin-top:12px">Yangilash (100 XP)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Quiz -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">❓ <span data-i18n="quiz_title">Bilim Testi</span></div>
+          <span class="badge primary" id="quiz-score">0/0</span>
+        </div>
+        <div class="card-body" id="quiz-content"></div>
+      </div>
+      <!-- Word -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🔤 <span data-i18n="word_title">So'z Topish</span></div>
+          <span class="badge primary" id="word-score">0 pt</span>
+        </div>
+        <div class="card-body" id="word-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SHOP ════ -->
+  <div class="page" id="page-shop">
+    <div class="section-title"><span class="ico">🛒</span> <span data-i18n="shop_title">Do'kon</span></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:.9rem;font-weight:700;flex-wrap:wrap">
+      🪙 <span data-i18n="your_gold">Sizning oltiningiz:</span>
+      <span class="badge primary" id="shop-gold">0</span>
+    </div>
+    <div class="tabs" style="margin-bottom:16px">
+      <button class="tab-btn active" onclick="setShopFilter('all',this)"     data-i18n="tab_all">Barchasi</button>
+      <button class="tab-btn"        onclick="setShopFilter('avatars',this)" data-i18n="tab_avatars">Avatarlar</button>
+      <button class="tab-btn"        onclick="setShopFilter('boosters',this)"data-i18n="tab_boosters">Kuchaytirgichlar</button>
+      <button class="tab-btn"        onclick="setShopFilter('themes',this)"  data-i18n="tab_themes">Mavzular</button>
+    </div>
+    <div class="grid-4 shop-grid-inner" id="shop-grid-inner"></div>
+  </div>
+
+  <!-- ════ PROFILE ════ -->
+  <div class="page" id="page-profile">
+    <div class="section-title"><span class="ico">👤</span> <span data-i18n="profile_title">Mening Profilim</span></div>
+    <div class="profile-hero">
+      <div class="profile-big-av" id="profile-big-av">🧙</div>
+      <div class="profile-info" style="flex:1;min-width:0">
+        <div class="profile-name"  id="profile-name">Foydalanuvchi</div>
+        <div class="profile-title" id="profile-title-text">Yangi Boshlovchi</div>
+        <div class="profile-mini-stats">
+          <div class="pms"><div class="pms-val" id="pms-level">1</div><div class="pms-label" data-i18n="level">Daraja</div></div>
+          <div class="pms"><div class="pms-val" id="pms-quests">0</div><div class="pms-label" data-i18n="quests_done">Vazifalar</div></div>
+          <div class="pms"><div class="pms-val" id="pms-streak">0</div><div class="pms-label" data-i18n="days_active">Kunlar</div></div>
+          <div class="pms"><div class="pms-val" id="pms-gold">0</div><div class="pms-label" data-i18n="stat_gold">Oltin</div></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost" onclick="openEditProfile()" style="color:#fff;border-color:rgba(255,255,255,.4);flex-shrink:0" data-i18n="edit">Tahrirlash</button>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📈 <span data-i18n="stats">Statistika</span></div></div>
+        <div class="card-body" id="profile-stats"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🏆 <span data-i18n="my_achieve">Yutuqlarim</span></div></div>
+        <div class="card-body"><div class="achieve-grid" id="profile-achieve"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🌟 <span data-i18n="attributes">Atributlar</span></div></div>
+        <div class="card-body" id="profile-attrs"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📅 <span data-i18n="act_calendar">Faollik Kalendari</span></div></div>
+        <div class="card-body" id="activity-cal"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ UPDATES ════ -->
+  <div class="page" id="page-updates">
+    <div class="section-title"><span class="ico">🔔</span> <span data-i18n="updates_title">Kutilayotgan Yangilanishlar</span></div>
+
+    <div class="update-card live">
+      <div class="update-top">
+        <div class="update-ver">🎮 Gamified Life v1.0</div>
+        <span class="update-status s-live" data-i18n="live_now">🟢 Hozir Mavjud</span>
+      </div>
+      <div class="update-title" data-i18n="v10_title">Birinchi Versiya — Hayotni O'yinga Aylantiring!</div>
+      <div class="update-desc"  data-i18n="v10_desc">Gamified Life 1.0 bilan tanishing!</div>
+      <div class="update-tags">
+        <span class="update-tag">⚔️ Vazifalar</span>
+        <span class="update-tag">🔥 Odatlar</span>
+        <span class="update-tag">🌟 Ko'nikmalar</span>
+        <span class="update-tag">🕹️ O'yinlar</span>
+        <span class="update-tag">🛒 Do'kon</span>
+        <span class="update-tag">⏱️ Pomodoro</span>
+        <span class="update-tag">📔 Kundalik</span>
+        <span class="update-tag">💰 Moliya</span>
+      </div>
+    </div>
+
+    <div class="update-card pending">
+      <div class="update-top">
+        <div class="update-ver">🤝 Gamified Life v1.1</div>
+        <span class="update-status s-pending" data-i18n="coming_soon">⏳ Kutilmoqda</span>
+      </div>
+      <div class="update-title" data-i18n="v11_title">Ijtimoiy Dunyo — Do'stlar va Klanlar</div>
+      <div class="update-desc"  data-i18n="v11_desc">Do'stlaringizni platformaga taklif qiling, birgalikda guruh vazifalarini bajaring va global liderlar jadvalida raqobat qiling.</div>
+      <div class="update-tags">
+        <span class="update-tag">👥 Do'stlar</span>
+        <span class="update-tag">⚔️ PvP</span>
+        <span class="update-tag">🏰 Klanlar</span>
+        <span class="update-tag">📩 Bildirishnomalar</span>
+        <span class="update-tag">🌍 Global Liderlar</span>
+      </div>
+    </div>
+
+    <div class="update-card pending">
+      <div class="update-top">
+        <div class="update-ver">🤖 Gamified Life v1.2</div>
+        <span class="update-status s-pending" data-i18n="coming_soon">⏳ Kutilmoqda</span>
+      </div>
+      <div class="update-title" data-i18n="v12_title">AI Murabbiy — Shaxsiy Rivojlanish</div>
+      <div class="update-desc"  data-i18n="v12_desc">Sun'iy intellekt asosida ishluvchi shaxsiy murabbiy siz uchun kun rejasini tavsiya qiladi.</div>
+      <div class="update-tags">
+        <span class="update-tag">🤖 AI Murabbiy</span>
+        <span class="update-tag">📊 Tahlillar</span>
+        <span class="update-tag">🎯 Maqsad</span>
+        <span class="update-tag">📝 Hisobot</span>
+        <span class="update-tag">💡 Smart Maslahat</span>
+      </div>
+    </div>
+
+    <div class="update-card pending">
+      <div class="update-top">
+        <div class="update-ver">📱 Gamified Life v1.3</div>
+        <span class="update-status s-pending" data-i18n="coming_soon">⏳ Kutilmoqda</span>
+      </div>
+      <div class="update-title" data-i18n="v13_title">Mobil Ilova va Oflayn Rejim</div>
+      <div class="update-desc"  data-i18n="v13_desc">Android va iOS uchun to'liq funksional mobil ilovalar chiqariladi.</div>
+      <div class="update-tags">
+        <span class="update-tag">📱 iOS App</span>
+        <span class="update-tag">🤖 Android App</span>
+        <span class="update-tag">📵 Oflayn</span>
+        <span class="update-tag">🔔 Push</span>
+        <span class="update-tag">💪 Health Sync</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <span style="font-family:'Baloo 2',cursive;font-weight:800;color:var(--accent)">🎮 Gamified Life <strong>1.0</strong></span>
+    <span>Hayotingizni o'yinga aylantiring</span>
+    <span>
+      Created by <strong>Morvi</strong>
+      &nbsp;|&nbsp;
+      <a href="https://t.me/morv1uss" target="_blank" rel="noopener">Admin 👤</a>
+    </span>
+    <span style="font-size:.75rem;color:var(--text3)">© 2026 Gamified Life</span>
+  </div>
+</footer>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/runner.js"></script>
+<script src="assets/js/games.js"></script>
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
